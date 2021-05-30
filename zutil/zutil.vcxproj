@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}</ProjectGuid>
+    <RootNamespace>zutil</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\builds\debug\bin\</OutDir>
+    <IntDir>.\builds\debug\obj\</IntDir>
+    <TargetName>$(ProjectName)-d</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Zack\Documents\Visual Studio 2017\Projects\zutil\zutil\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\zutil\zatomic.h" />
+    <ClInclude Include="include\zutil\zchrono.h" />
+    <ClInclude Include="include\zutil\zcompiler_clang.h" />
+    <ClInclude Include="include\zutil\zcompiler_gcc.h" />
+    <ClInclude Include="include\zutil\zcompiler_msvc.h" />
+    <ClInclude Include="include\zutil\zconfig.h" />
+    <ClInclude Include="include\zutil\zcore.h" />
+    <ClInclude Include="include\zutil\zbase64.h" />
+    <ClInclude Include="include\zutil\zcondvar.h" />
+    <ClInclude Include="include\zutil\zendian.h" />
+    <ClInclude Include="include\zutil\ziconv.h" />
+    <ClInclude Include="include\zutil\zinteger.h" />
+    <ClInclude Include="include\zutil\zlog.h" />
+    <ClInclude Include="include\zutil\zmath.h" />
+    <ClInclude Include="include\zutil\zmutex.h" />
+    <ClInclude Include="include\zutil\zqueue.h" />
+    <ClInclude Include="include\zutil\zrect.h" />
+    <ClInclude Include="include\zutil\zplatform.h" />
+    <ClInclude Include="include\zutil\zplatform_posix.h" />
+    <ClInclude Include="include\zutil\zplatform_win32.h" />
+    <ClInclude Include="include\zutil\zresult.h" />
+    <ClInclude Include="include\zutil\zsal.h" />
+    <ClInclude Include="include\zutil\zsemaphore.h" />
+    <ClInclude Include="include\zutil\zstring.h" />
+    <ClInclude Include="include\zutil\zsystem.h" />
+    <ClInclude Include="include\zutil\zthread.h" />
+    <ClInclude Include="include\zutil\zvec2.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_apple.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_bsd.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_common.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_linux.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_qnxnto.h" />
+    <ClInclude Include="sources\zbasepath\zbasepath_win32.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\zlog.c" />
+    <ClCompile Include="sources\zatomic.c" />
+    <ClCompile Include="sources\zbase64.c" />
+    <ClCompile Include="sources\zbasepath\zbasepath.c" />
+    <ClCompile Include="sources\zchrono.c" />
+    <ClCompile Include="sources\zcondvar.c" />
+    <ClCompile Include="sources\ziconv.c" />
+    <ClCompile Include="sources\zmath.c" />
+    <ClCompile Include="sources\zmutex.c" />
+    <ClCompile Include="sources\zplatform_win32.c" />
+    <ClCompile Include="sources\zqueue.c" />
+    <ClCompile Include="sources\zrect.c" />
+    <ClCompile Include="sources\zresult.cpp" />
+    <ClCompile Include="sources\zsemaphore.c" />
+    <ClCompile Include="sources\zstring.c" />
+    <ClCompile Include="sources\zsystem.cpp" />
+    <ClCompile Include="sources\zthread.c" />
+    <ClCompile Include="sources\zvec2.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

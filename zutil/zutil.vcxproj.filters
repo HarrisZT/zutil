@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Include\zutil">
+      <UniqueIdentifier>{fa2cb315-5468-4b1b-a899-a5cfc6608f9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Internal\zbasepath">
+      <UniqueIdentifier>{17a07a16-1a7e-4656-9eb7-9f8325174ae4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\zutil\zcore.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zsal.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zinteger.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zbase64.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zresult.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zcompiler_clang.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zcompiler_gcc.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zcompiler_msvc.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zconfig.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zplatform.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zcondvar.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zmutex.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zplatform_posix.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zplatform_win32.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zendian.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zmath.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zvec2.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zsemaphore.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zstring.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zthread.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\ziconv.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zrect.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zqueue.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_apple.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_bsd.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_common.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_linux.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_qnxnto.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\zbasepath\zbasepath_win32.h">
+      <Filter>Internal\zbasepath</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zatomic.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zsystem.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zchrono.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil\zlog.h">
+      <Filter>Include\zutil</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\zmutex.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zbase64.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zcondvar.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zmath.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zsemaphore.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zstring.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zresult.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zthread.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\ziconv.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zrect.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zvec2.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zqueue.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zbasepath\zbasepath.c">
+      <Filter>Internal\zbasepath</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zatomic.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zsystem.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zchrono.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zplatform_win32.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\zlog.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

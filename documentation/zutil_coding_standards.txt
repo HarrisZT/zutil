@@ -1,0 +1,186 @@
+/******************************************************************************
+* zutil - C Utility Library
+* Copyright (C) 2017-2021 Zachary T Harris. All Rights Reserved.  
+* Zlib license.
+*
+* File: zutil_coding_standards.txt
+* Desc: outlines the coding standards used by zutil
+*******************************************************************************
+
+
+ 
+
+
+About Zutil
+===============================================================================
+	Zutil is a collection and demonstration of utilities written in the C 
+language. It is free and open-source, you can do as you like with it so long as
+you follow the terms of the license. The source code is released under the zlib
+license in the hope that it may be useful for other people, however it does not 
+offer any warranty that it is suitable for any particular purpose, even those 
+for which it was specifically written.
+Zutil is written primarily in standard C (1989, ANSI). C89 is well supported
+across platforms and compilers. 
+
+ 
+
+
+
+Zutil coding guidelines
+===============================================================================  
+The top priority in code style is readability. Generally, checking the 
+surrounding code and trying to imitate it is good practice as consistency is
+part of what makes code easy to follow. The extra time required to properly
+format the code is well worth it in the long run as it makes sections easier to
+locate, understand, debug, and maintain.
+
+Lines of code are to be no longer than 80 characters long. This amount of text 
+is easy to fit in most monitors with a decent font size. It also puts less 
+strain on human eyes to not have to scan horizontally back and forth. Lines
+longer than 80 characters, or have too many levels of indentation, become hard
+to read, and means that you should restructure your code.  
+
+
+
+
+
+Braces and Spacing
+===============================================================================  
+Brace placement closely follows that of the traditional K&R format, and Tabs 
+with a length of 4 characters are used. Placing braces on the same line as the
+statement conserves vertical space and keeps the code neat and compact.
+Example:
+
+    for (it = 0; it < num_elements; it++) {
+        foo[it] = foo[it] + 42;
+    
+    	if (foo[it] < 35) {
+    		printf ("Foo!");
+    		foo[it]--;
+    	}
+		else {
+    		printf ("Bar!");
+    		foo[it]++;
+    	}
+    }
+
+
+
+
+
+Function Declarations in header files
+===============================================================================  
+Headers files are where the public interface is, and it's important to have a
+well laid out format that is easy to understand and yet desciptive. In this
+way, the format itself serves as documentation.
+
+Public function declarations should be formatted as such:
+
+Line 1:  <export> <return-type> <calling convention>
+Line 2:  <function name>
+Line 3:      <annotation> <argument 1>
+Line 4:      <annotation> <argument 2>
+Line 5:      <annotation> <argument 3>
+             <annotation> and so on...
+
+Example:
+         extern int ZAPI
+         CopyString(
+		     _Inout_ char*        _dst,
+             _In_    const char*  _src,
+             _In_    unsigned int _dstlen);
+
+Notice that annotations, arguments types, and argument variable names
+are aligned into vertical columns. This format aims to create an easier
+to read layout so that you can quickly understand each part of the function.
+
+
+
+
+
+Naming conventions
+===============================================================================  
+- Functions:
+  names use captial CamalCase. It may have underscores to distinguish
+  it as being part of a specific interface. 
+  For example:
+               void ZThread_Join();
+  
+  Note that "ZThread" is seperated by underscore from "Join". This says that 
+  the function is part of an interface called ZThread and the action that the
+  function performs is to "Join".
+
+   
+  
+- Variables:
+  names should be kept as short as possible yet still descriptive of what they
+  represent. The following are general rules to abide by.
+
+      1. Do not use abreviations. 
+             char* myStringVar;  //good name
+             char* msv;          //bad name
+
+
+      2. Types and names should be seperated. For example, if we have a
+	     pointer to a char, then the type is char-pointer, the pointer is not
+		 part of the name. Notice the asterisk placement:
+             char* myStringVar;  //good seperation
+             char *myStringVar;  //bad seperation
+
+
+      3. Names of variables should be either all lowercase or lower-camelCase, 
+         and some variables may benefit from having a prefix to indicate their 
+	     type and use. Call apon thy best judgement to determine a suitable
+	     variable name that looks good and is descriptive. 
+
+         Acceptable examples:
+             int iErrorCode; //good. 'i' prefix for integer, name is camelCase
+	         int errorcode;  //good. lowercase, has a neat simple appearance.
+
+
+	  4. If a variable name if for a function parameter, it is to be prefixed
+	     with an underscore. See this example of a function declaration and 
+		 note that the variables "_dst", "_src", and "_dstlen" are underscored.
+
+		 extern int ZAPI
+         CopyString(
+		     _Inout_ char*        _dst,
+         	 _In_    const char*  _src,
+         	 _In_    unsigned int _dstlen);
+
+
+	  5. For loop iterators, avoid using the old practice of naming it "i".
+	     Instead use "it" (short for iterator). 
+
+  
+  
+  - Constants:
+      names of constant values are in all caps. This applies to enumerations,
+	  macros, and any type of constant. Words are seperated by underscore.
+	  Examples:
+	      #define ITERATIONS_COUNT 100         //good name, all caps
+		  const Int32 ITERATIONS_COUNT = 100;  //good name, all caps
+		  enum { ITERATIONS_COUNT = 100 };     //good name, all caps
+		   
+	  Note that for enum types, the name of the enum if it has one, is also in
+	  all caps and should reflect its values. In addition, you should provide
+	  a convenience typedef for enums. The tag name is should be prefixed with 
+	  an underscore to differentiate it from the typedef name.
+	  Example:
+	      typedef enum _COLOR {
+		      COLOR_RED,
+			  COLOR_GREEN,
+			  COLOR_BLUE,
+		  } COLOR;
+
+  
+
+      
+
+
+
+
+
+/*****************************************************************************/  
+//EOF
+/*****************************************************************************/  

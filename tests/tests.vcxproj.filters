@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Internal\zthreads">
+      <UniqueIdentifier>{6d5a5935-f3cb-4d90-8d74-0c0da5d49aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\zlog">
+      <UniqueIdentifier>{480621ee-d839-434d-9c4e-f3ec74b3b469}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="internal\zthreads\test_condvars.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_mutex.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_threadargs.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_threadexit.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_threadonce.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_threadtss.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\test_threadyield.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zthreads\testunit_module_zthreads.c">
+      <Filter>Internal\zthreads</Filter>
+    </ClCompile>
+    <ClCompile Include="internal\zlog\testunit_module_zlog.c">
+      <Filter>Internal\zlog</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="internal\zthreads\testunit_module_zthreads.h">
+      <Filter>Internal\zthreads</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zutil_testunits.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

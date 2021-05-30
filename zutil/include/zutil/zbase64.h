@@ -61,7 +61,7 @@ ZBase64_IsValidChar(
 
 /*
 Decodes a string and converts the result to base64 binary data. 
-(Performs the opposite operation of f2dbase64_encode). 
+(Performs the opposite operation of ZBase64_Encode). 
 @_str    : the string to be decoded into base64 binary
 @_dataOut: an array to contain the decoded results (preallocated)
 @_iLen   : length of the string (_str)
@@ -74,7 +74,7 @@ ZBase64_Decode(
 
 /*
 Encodes binary data and returns the result as a string 
-(Performs the opposite operation of f2dbase64_decode).
+(Performs the opposite operation of ZBase64_Decode).
 !Warning! - This function returns a string allocated with malloc. 
             Caller is responsible for deallocating it with free.
 @_lpData: binary data to be encoded

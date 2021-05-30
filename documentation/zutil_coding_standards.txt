@@ -8,8 +8,6 @@
 *******************************************************************************
 
 
- 
-
 
 About Zutil
 ===============================================================================
@@ -18,13 +16,10 @@ language. It is free and open-source, you can do as you like with it so long as
 you follow the terms of the license. The source code is released under the zlib
 license in the hope that it may be useful for other people, however it does not 
 offer any warranty that it is suitable for any particular purpose, even those 
-for which it was specifically written.
-Zutil is written primarily in standard C (1989, ANSI). C89 is well supported
-across platforms and compilers. 
+for which it was specifically written. Zutil is written primarily in standard C
+(1989, ANSI). C89 is well supported across platforms and compilers. 
 
  
-
-
 
 Zutil coding guidelines
 ===============================================================================  
@@ -39,8 +34,6 @@ is easy to fit in most monitors with a decent font size. It also puts less
 strain on human eyes to not have to scan horizontally back and forth. Lines
 longer than 80 characters, or have too many levels of indentation, become hard
 to read, and means that you should restructure your code.  
-
-
 
 
 
@@ -66,14 +59,11 @@ Example:
 
 
 
-
-
-Function Declarations in header files
+Function declarations in header files
 ===============================================================================  
 Headers files are where the public interface is, and it's important to have a
 well laid out format that is easy to understand and yet desciptive. In this
 way, the format itself serves as documentation.
-
 Public function declarations should be formatted as such:
 
 Line 1:  <export> <return-type> <calling convention>
@@ -93,8 +83,6 @@ Example:
 Notice that annotations, arguments types, and argument variable names
 are aligned into vertical columns. This format aims to create an easier
 to read layout so that you can quickly understand each part of the function.
-
-
 
 
 
@@ -172,14 +160,6 @@ Naming conventions
 			  COLOR_GREEN,
 			  COLOR_BLUE,
 		  } COLOR;
-
-  
-
-      
-
-
-
-
 
 /*****************************************************************************/  
 //EOF

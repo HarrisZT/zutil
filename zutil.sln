@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zutil", "zutil\zutil.vcxproj", "{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{6F476341-428C-42A3-B0A7-8094791A9338}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{225FF06B-CF28-4B6D-B5DE-63CD28FE69BB}"
+	ProjectSection(SolutionItems) = preProject
+		documentation\zutil_coding_standards.txt = documentation\zutil_coding_standards.txt
+		documentation\zutil_header_template.txt = documentation\zutil_header_template.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Debug|x64.ActiveCfg = Debug|x64
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Debug|x64.Build.0 = Debug|x64
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Debug|x86.ActiveCfg = Debug|Win32
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Debug|x86.Build.0 = Debug|Win32
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Release|x64.ActiveCfg = Release|x64
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Release|x64.Build.0 = Release|x64
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Release|x86.ActiveCfg = Release|Win32
+		{569417B7-E32D-4AB9-A1A7-04D31F6E6C6A}.Release|x86.Build.0 = Release|Win32
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Debug|x64.ActiveCfg = Debug|x64
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Debug|x64.Build.0 = Debug|x64
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Debug|x86.Build.0 = Debug|Win32
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Release|x64.ActiveCfg = Release|x64
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Release|x64.Build.0 = Release|x64
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Release|x86.ActiveCfg = Release|Win32
+		{6F476341-428C-42A3-B0A7-8094791A9338}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFF97899-91FE-4BD6-91BC-00C22CD7A121}
+	EndGlobalSection
+EndGlobal

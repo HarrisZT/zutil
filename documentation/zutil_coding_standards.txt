@@ -48,12 +48,12 @@ Example:
         foo[it] = foo[it] + 42;
     
     	if (foo[it] < 35) {
-    		printf ("Foo!");
-    		foo[it]--;
+    	    printf ("Foo!");
+    	    foo[it]--;
     	}
-		else {
-    		printf ("Bar!");
-    		foo[it]++;
+	else {
+    	    printf ("Bar!");
+    	    foo[it]++;
     	}
     }
 
@@ -76,7 +76,7 @@ Line 5:      <annotation> <argument 3>
 Example:
          extern int ZAPI
          CopyString(
-		     _Inout_ char*        _dst,
+             _Inout_ char*        _dst,
              _In_    const char*  _src,
              _In_    unsigned int _dstlen);
 
@@ -123,7 +123,7 @@ Naming conventions
 
          Acceptable examples:
              int iErrorCode; //good. 'i' prefix for integer, name is camelCase
-	         int errorcode;  //good. lowercase, has a neat simple appearance.
+	     int errorcode;  //good. lowercase, has a neat simple appearance.
 
 
 	  4. If a variable name if for a function parameter, it is to be prefixed
@@ -131,11 +131,11 @@ Naming conventions
 		 note that the variables "_dst", "_src", and "_dstlen" are underscored.
 
 		 extern int ZAPI
-         CopyString(
+                 CopyString(
 		     _Inout_ char*        _dst,
-         	 _In_    const char*  _src,
-         	 _In_    unsigned int _dstlen);
-
+         	     _In_    const char*  _src,
+         	     _In_    unsigned int _dstlen);
+    
 
 	  5. For loop iterators, avoid using the old practice of naming it "i".
 	     Instead use "it" (short for iterator). 
@@ -147,8 +147,8 @@ Naming conventions
 	  macros, and any type of constant. Words are seperated by underscore.
 	  Examples:
 	      #define ITERATIONS_COUNT 100         //good name, all caps
-		  const Int32 ITERATIONS_COUNT = 100;  //good name, all caps
-		  enum { ITERATIONS_COUNT = 100 };     //good name, all caps
+	      const Int32 ITERATIONS_COUNT = 100;  //good name, all caps
+	      enum { ITERATIONS_COUNT = 100 };     //good name, all caps
 		   
 	  Note that for enum types, the name of the enum if it has one, is also in
 	  all caps and should reflect its values. In addition, you should provide
@@ -156,10 +156,10 @@ Naming conventions
 	  an underscore to differentiate it from the typedef name.
 	  Example:
 	      typedef enum _COLOR {
-		      COLOR_RED,
-			  COLOR_GREEN,
-			  COLOR_BLUE,
-		  } COLOR;
+	          COLOR_RED,
+	          COLOR_GREEN,
+	          COLOR_BLUE,
+	      } COLOR;
 
 /*****************************************************************************/  
 //EOF

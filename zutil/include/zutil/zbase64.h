@@ -1,10 +1,10 @@
-/****************************************************************************** 
+/******************************************************************************
 * zutil - C Utility Library
 * Copyright (C) 2017-2021 Zachary T Harris. All Rights Reserved.  
 * Zlib license.
 *
 * File: zbase64.h 
-* Desc: base64 encode/decode routines 
+* Desc: base64 encoded/decode routines 
 *******************************************************************************
 
 
@@ -23,11 +23,11 @@ freely, subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be
    misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
-******************************************************************************/ 
+******************************************************************************/  
 #ifndef __ZBASE64_H__
-#define __ZBASE64_H__  
+#define __ZBASE64_H__ 
 
-#include "zcore.h" 
+#include "zcore.h"  
 #if defined(__cplusplus)
 extern "C" {
 #endif
@@ -35,56 +35,45 @@ extern "C" {
 
 
 /*
-Determines binary data size of a given base64-encoded data string.
-@_str  : a string containing base64-encoded data
-@return: the binary size of the string*/
-extern SizeT ZAPI
-ZBase64_DecodedSize(
-	_In_ Lpcstr _str);
+Returns the required size for allocating a string to be encoded.
+(The result accounts for null termination)
+@_string: an input string to be encoded
+@return : allocation size*/
+extern Uint32 ZAPI
+ZBase64_GetEncodingSize(
+	_In_ Lpcstr _string);
 
 /*
-Determines the number of base64 characters needed
-for creating a base64-encoded string.
-@_iLen : the length of a string that will be encoded
-@return: the required length for a base64 data array*/
-extern SizeT ZAPI
-ZBase64_EncodedSize(
-	_In_ SizeT _iLen);
+Returns the required size for allocating a string to be decoded.
+(The result accounts for null termination)
+@_string: an encoded string to be encoded
+@return : allocation size*/
+extern Uint32 ZAPI
+ZBase64_GetDecodingSize(
+	_In_ Lpcstr _string);
 
 /*
-Reports whether the given char is valid for base64 binary.
-@_char : the char to validate
-@return: 1 (true) if the char is base64 compatible, else (0) false*/
-extern Bool ZAPI
-ZBase64_IsValidChar( 
-	_In_ Char _char);
-
-/*
-Decodes a string and converts the result to base64 binary data. 
-(Performs the opposite operation of ZBase64_Encode). 
-@_str    : the string to be decoded into base64 binary
-@_dataOut: an array to contain the decoded results (preallocated)
-@_iLen   : length of the string (_str)
-@return  : true if operation succeeded, else false*/
-extern Bool ZAPI
-ZBase64_Decode(
-	_In_    Lpcstr _str, 
-	_Inout_ Byte*  _dataOut, 
-	_In_    SizeT  _iLen);
-
-/*
-Encodes binary data and returns the result as a string 
-(Performs the opposite operation of ZBase64_Decode).
-!Warning! - This function returns a string allocated with malloc. 
-            Caller is responsible for deallocating it with free.
-@_lpData: binary data to be encoded
-@_iLen  : length of the _lpData array
-@return : an allocated string*/
-extern Char* ZAPI
+Encodes a given string with base64. 
+@_inputstring: an input string to be encoded
+@_inputlength: length size of the input string
+@_output     : an allocated string to contain the result*/
+extern Void ZAPI
 ZBase64_Encode(
-	_In_ const Byte* _lpData, 
-	_In_ SizeT       _iLen); 
- 
+	_In_    Byte*  _inputstring, 
+	_In_    Uint32 _inputlength, 
+	_Inout_ Byte*  _output);
+
+/*
+Decodes a given base64 encoded string.
+@_encodedstring: a base64 encoded string to be decoded
+@_inLength     : length size of the encoded string
+@_output       : an allocated string to contain the result*/
+extern Void ZAPI
+ZBase64_Decode(
+	_In_    Byte*  _encodedstring, 
+	_In_    Uint32 _inLength, 
+	_Inout_ Byte*  _output);
+
 
 
 #if defined(__cplusplus)

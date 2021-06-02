@@ -2,9 +2,9 @@
 * zutil - C Utility Library
 * Copyright (C) 2017-2021 Zachary T Harris. All Rights Reserved.  
 * Zlib license.
-* 
-* File: zbase64.c
-* Desc: base64 encode/decode routines 
+*
+* File: zbase64.c 
+* Desc: base64 encoded/decode routines 
 *******************************************************************************
 
 
@@ -23,195 +23,197 @@ freely, subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be
    misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
-******************************************************************************/
+******************************************************************************/ 
 #include "zutil/zbase64.h"
 
 
 
-static Int32 b64_decoder[] = {
-	62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58,
-	59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5,
-	6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-	21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28,
-	29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
-	43, 44, 45, 46, 47, 48, 49, 50, 51 
-};
-static const Char b64_encoder[] = 
+static const Char ENCODINGTABLE[65] = 
 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+static const Char DECODINGTABLE[256] = {
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+	,-1,62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,-1,-1,
+	-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,
+	23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,
+	38,39,40,41,42,43,44,45,46,47,48,49,50,51,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+};
 
 
 
+Uint32
+ZBase64_GetEncodingSize(
+	_In_ Lpcstr _string) {
 
-SizeT
-ZBase64_DecodedSize(
-	_In_ Lpcstr _str) {
-
-	SizeT len, i, decodedsiz;
-
-	if (!_str)
-		return 0;
-
-	len = strlen(_str);
-	decodedsiz = len / 4 * 3;
-
-	for (i = len; i-- > 0; ) {
-		if (_str[i] == '=')
-			decodedsiz--;
-		else break;
-	}
-	return decodedsiz;
+	Uint32 inlen;
+	size_t ret;
+	inlen = strlen(_string);
+	ret = inlen;
+	if (inlen % 3 != 0)
+		ret += 3 - (inlen % 3);
+	ret /= 3;
+	ret *= 4;
+	ret++; //< +1 for null termination
+	return ret;
 }
 
 
-SizeT
-ZBase64_EncodedSize(
-	_In_ SizeT _iLen) {
-
-	SizeT encodedsiz;
-	encodedsiz = _iLen;
-	if (_iLen % 3 != 0)
-		encodedsiz += 3 - (_iLen % 3);
-	encodedsiz /= 3;
-	encodedsiz *= 4;
-	return encodedsiz;
-}
+Uint32
+ZBase64_GetDecodingSize(
+	_In_ Lpcstr _string) {
+	//+1 for null termination
+	return strlen(_string) + 1;
+} 
 
 
-Bool
-ZBase64_IsValidChar(
-	_In_ Char _char) {
-
-	if (_char >= '0' && _char <= '9')
-		return Z_TRUE;
-	if (_char >= 'A' && _char <= 'Z')
-		return Z_TRUE;
-	if (_char >= 'a' && _char <= 'z')
-		return Z_TRUE;
-	if (_char == '+' || _char == '/' || _char == '=')
-		return Z_TRUE;
-	return Z_FALSE;
-}
-
-
-Bool
-ZBase64_Decode(
-	_In_    Lpcstr _str,
-	_Inout_ Byte*  _dataOut,
-	_In_    SizeT  _iLen) {
-
-	Int32 v;
-	SizeT len, i, j;
-
-	if (_str == NULL || _dataOut == NULL)
-		return Z_FALSE;
-
-	len = strlen(_str);
-	if (_iLen < ZBase64_DecodedSize(_str) || len % 4 != 0)
-		return Z_FALSE;
-
-	for (i = 0; i < len; i++) {
-		if (!ZBase64_IsValidChar(_str[i]))
-			return Z_FALSE;
-	}
-	for (i = 0, j = 0; i < len; i += 4, j += 3) {
-		v = b64_decoder[_str[i] - 0x2B];
-		v = (v << 6) | b64_decoder[_str[i + 1] - 0x2B];
-
-		v = _str[i + 2] == '=' ? v << 0x06 :
-			(v << 0x06) | b64_decoder[_str[i + 2] - 0x2B];
-
-		v = _str[i + 3] == '=' ? v << 0x06 :
-			(v << 0x06) | b64_decoder[_str[i + 3] - 0x2B];
-
-		_dataOut[j] = (v >> 0x10) & 0xFF;
-		if (_str[i + 2] != '=')
-			_dataOut[j + 1] = (v >> 0x08) & 0xFF;
-		if (_str[i + 3] != '=')
-			_dataOut[j + 2] = v & 0xFF;
-	}
-	return Z_TRUE;
-}
-
-
-Char*
+Void
 ZBase64_Encode(
-	_In_ const Byte* _lpData,
-	_In_ SizeT       _iLen) {
+	_In_    Byte*  _input,
+	_In_    Uint32 _inputlength,
+	_Inout_ Byte*  _output) {
 
-	Char* dst;
-	SizeT eLen;
-	SizeT i, j, v;
+	Char   buffer1[3];
+	Char   buffer2[4];
+	Byte   it0, it1;
+	Uint32 inputindex;
+	Uint32 outputindex;
+	Uint32 tableindex;
 
-	if (!_lpData || !_iLen)
-		return NULL;
+	it0         = 0;
+	it1         = 0;
+	inputindex  = 0;
+	outputindex = 0;
 
-	eLen = ZBase64_EncodedSize(_iLen);
-	dst = (Char*)malloc(eLen + 1);
-	if (!dst)
-		return NULL;
-	dst[eLen] = '\0';
+	while (inputindex < _inputlength) {
+		buffer1[it0++] = _input[inputindex++];
+		if (it0 == 3) {
+			tableindex = 
+				(buffer1[0] & 0xFC) >> 0x02;
 
-	for (i = 0, j = 0; i < _iLen; i += 3, j += 4) {
-		v = _lpData[i];
-		v = i + 1 < _iLen ? v << 0x08 | _lpData[i + 1] : v << 0x08;
-		v = i + 2 < _iLen ? v << 0x08 | _lpData[i + 2] : v << 0x08;
+			_output[outputindex++] = ENCODINGTABLE[tableindex];
+			
+			tableindex = 
+				((buffer1[0] & 0x03) << 0x04) + 
+				((buffer1[1] & 0xF0) >> 0x04);
 
-		dst[j] = b64_encoder[(v >> 0x12) & 0x3F];
-		dst[j + 1] = b64_encoder[(v >> 0x0C) & 0x3F];
+			_output[outputindex++] = ENCODINGTABLE[tableindex];
 
-		if (i + 1 < _iLen)
-			dst[j + 2] = b64_encoder[(v >> 0x06) & 0x3F];
-		else dst[j + 2] = '=';
+			tableindex = 
+				((buffer1[1] & 0x0F) << 0x02) +
+				((buffer1[2] & 0xC0) >> 0x06);
 
-		if (i + 2 < _iLen)
-			dst[j + 3] = b64_encoder[v & 0x3F];
-		else dst[j + 3] = '=';
+			_output[outputindex++] = ENCODINGTABLE[tableindex];
+
+			tableindex = buffer1[2] & 0x3F;
+
+			_output[outputindex++] = ENCODINGTABLE[tableindex];
+
+			it0 = 0;
+		}
 	}
-	return dst;
+	if (it0) {
+		for (it1 = it0; it1 < 3; it1++) {
+			buffer1[it1] = '\0';
+		}
+		buffer2[0] = 
+			(buffer1[0] & 0xFC) >> 0x02;
+
+		buffer2[1] = 
+			((buffer1[0] & 0x03) << 0x04) +
+			((buffer1[1] & 0xF0) >> 0x04);
+
+		buffer2[2] = 
+			((buffer1[1] & 0x0F) << 0x02) + 
+			((buffer1[2] & 0xC0) >> 0x06);
+
+		buffer2[3] = 
+			buffer1[2] & 0x3F;
+
+		for (it1 = 0; it1 < (it0 + 1); it1++) {
+			_output[outputindex++] = 
+				ENCODINGTABLE[buffer2[it1]];
+		}
+		while (it0++ < 3) {
+			_output[outputindex++] = '=';
+		}
+	}
+	_output[outputindex] = '\0';
 }
-/****************************************************************************** 
-******************************************************************************/  
 
 
+Void
+ZBase64_Decode(
+	_In_    Byte*  _encodedstring,
+	_In_    Uint32 _inputlength,
+	_Inout_ Byte*  _output) {
 
+	Char   buffer1[4];
+	Char   buffer2[4];
+	Byte   it0, it1;
+	Uint32 inputindex;
+	Uint32 outputindex;
 
+	it0         = 0;
+	it1         = 0;
+	inputindex  = 0;
+	outputindex = 0;
 
-/*
-example function demonstrating use of zbase64 routines:
-******************************************************************************/
-///static void ExampleUsageFunction() {
-///
-///    size_t      iLen;
-///    char*       encoding;
-///    char*       cResult; 
-///    const char* b64data;
-///
-///     b64data = 
-///    	    "ABC123 \"The quick brown fox jumped over the lazy dog\""; 
-///    
-///    printf("data:    '%s'\n", b64data);
-///    
-///    encoding = ZBase64_Encode((const Byte*)b64data, strlen(b64data));
-///    printf("encoded: '%s'\n", encoding); 
-///    printf(
-///    	"decoded %s data size\n", 
-///    	ZBase64_DecodedSize(encoding) == strlen(b64data) ? "==" : "!=");
-///    
-///    //(add +1 for NULL terminated str) 
-///    iLen    = ZBase64_DecodedSize(encoding) + 1;
-///    cResult = (Char*)malloc(iLen);
-///    
-///    if (!ZBase64_Decode(encoding, (Byte*)cResult, iLen)) {
-///    	printf("Decoding Failed\n");
-///    	return 1;
-///    }
-///    cResult[iLen] = '\0';
-///    
-///    printf("dec:     '%s'\n", cResult);
-///    printf("data %s dec\n", strcmp(b64data, cResult) == 0 ? "==" : "!=");
-///    free(cResult); 
-///} 
+	while (inputindex < _inputlength) {
+		buffer2[it0] = _encodedstring[inputindex++];
+		if (buffer2[it0] == '=') {
+			break;
+		}
+		if (++it0 == 4) {
+			for (it0 = 0; it0 != 4; it0++) {
+				buffer2[it0] = DECODINGTABLE[buffer2[it0]];
+			}
+			_output[outputindex++] =
+				(Char)((buffer2[0] << 0x02) +
+				((buffer2[1] & 0x30) >> 0x04));
+
+			_output[outputindex++] =
+				(Char)(((buffer2[1] & 0x0F) << 0x04) +
+				((buffer2[2] & 0x3C) >> 0x02));
+
+			_output[outputindex++] =
+				(Char)(((buffer2[2] & 0x03) << 0x06) +
+					buffer2[3]);
+
+			it0 = 0;
+		}
+	}
+	if (it0) {
+		for (it1 = it0; it1 < 4; it1++) {
+			buffer2[it1] = '\0';
+		}
+		for (it1 = 0; it1 < 4; it1++) {
+			buffer2[it1] = DECODINGTABLE[buffer2[it1]];
+		}
+		buffer1[0] =
+			(buffer2[0] << 0x02) +
+			((buffer2[1] & 0x30) >> 0x04);
+
+		buffer1[1] =
+			((buffer2[1] & 0x0F) << 0x04) +
+			((buffer2[2] & 0x3c) >> 0x02);
+
+		buffer1[2] =
+			((buffer2[2] & 0x03) << 0x06) +
+			buffer2[3];
+
+		for (it1 = 0; it1 < (it0 - 1); it1++) {
+			_output[outputindex++] = (Char)buffer1[it1];
+		}
+	}
+	_output[outputindex] = '\0';
+}
 /*****************************************************************************/  
 //EOF
-/*****************************************************************************/
+/*****************************************************************************/  

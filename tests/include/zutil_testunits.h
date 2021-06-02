@@ -39,16 +39,13 @@ typedef Void(*TESTCALLBACK)(Void);
 typedef struct {
 	Lpcstr       name;
 	TESTCALLBACK callback;
-} TESTUNIT;  
+} TESTUNIT; 
 
 
-	   
-extern Void 
-TestUnit_Module_ZThreads(Void); 
-
-extern Void
-TestUnit_Module_ZLog(Void);
-
+extern Void TestUnit_Module_ZBase64(int _argc, char** _argv);
+extern Void TestUnit_Module_ZThreads(int _argc, char** _argv); 
+extern Void TestUnit_Module_ZLog(int _argc, char** _argv);
+	
 
 
 #if defined(__cplusplus)

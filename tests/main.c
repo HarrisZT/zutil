@@ -30,6 +30,7 @@ freely, subject to the following restrictions:
  
 
 const TESTUNIT s_module[] = {   
+	{ "TestUnit Module: ZBase64",  TestUnit_Module_ZBase64  },
 	{ "TestUnit Module: ZLog",     TestUnit_Module_ZLog     }, 
 	{ "TestUnit Module: ZThreads", TestUnit_Module_ZThreads }, 
     { NULL,                                                 }
@@ -37,7 +38,7 @@ const TESTUNIT s_module[] = {
 
 
 
-int main(int argc, char** argv) {
+int main(int _argc, char** _argv) {
 	Int32           it;
 	const TESTUNIT* test;
 
@@ -50,7 +51,7 @@ int main(int argc, char** argv) {
 		/*
 		run callback to test module:*/
 		test = &(s_module[it]);
-		test->callback();
+		test->callback(_argc, _argv);
 		/*
 		conclusion: */
 		printf("\n  Press 'ENTER' Key To Continue");

@@ -34,21 +34,14 @@ extern "C" {
 #endif 
 
 
-#define ZBASEPATH_GETEXE 0 //flag: get the program executable path
-#define	ZBASEPATH_GETMOD 1 //flag: get the program module path
+ 
 /* 
-Returns the path to the program executable or module.  
-@_iExeOrModFlag:  value must be 0 or 1
-                  (0)- get the program executable path
-				  (1)- get the program module path 
-@_iDirnameLength: optional recipient for the length of the 
-                  dirname part of the path. 
-@_return:         the path, remember to free it when finished!
-                  result may be NULL on function failure*/
-extern Char*
-ZBasePath_Get(
-	_In_        Int32  _iExeOrModFlag, 
-	_Inout_opt_ Int32* _iDirnameLength); 
+Returns the full path of the program executable.
+Note that the string will also contain the executable name.
+@return: an allocated, remember to free it when finished!
+         result may be NULL on function failure*/
+extern Char* 
+ZGetBasePath(Void); 
  
 
 

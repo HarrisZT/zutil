@@ -45,13 +45,11 @@ freely, subject to the following restrictions:
 extern "C" {
 #endif
 
-
 	
-	static INT32 _Win32BasePath(
-		HMODULE _hmodule,
-		PCHAR   _pathout,
-		INT32   _capacity,
-		PINT32  _dirnamelength) {		
+	static INT32 
+	Win32GetBasePath( 
+		_Inout_opt_ PCHAR _pathout,
+		_In_        INT32 _capacity) {		
 		
 		WCHAR  wBuffer1[MAX_PATH];
 		WCHAR  wBuffer2[MAX_PATH];
@@ -59,13 +57,13 @@ extern "C" {
 		DWORD  dwBufferSize;
 		WCHAR* wPath1 = NULL; 
 		WCHAR* wPath2 = NULL;
-		INT32  iLength[3] = { -1 };
+		INT32  iLength[3] = { -1, };
 		
 		for (;;) { 
 			dwBufferSize = (DWORD)(sizeof(wBuffer1) / sizeof(wBuffer1[0]));
 
 			dwSize[0] = GetModuleFileNameW(
-				_hmodule, 
+				NULL, 
 				wBuffer1, 
 				dwBufferSize);
 
@@ -85,7 +83,7 @@ extern "C" {
 					dwSize[1] *= 2;
 					wPath1 = wPath2;
 					dwSize[0] = 
-						GetModuleFileNameW(_hmodule, wPath1, dwSize[1]);
+						GetModuleFileNameW(NULL, wPath1, dwSize[1]);
 
 				} while (dwSize[0] == dwSize[1]);
 
@@ -119,15 +117,6 @@ extern "C" {
 			}
 			if (iLength[2] == 0) {
 				break;
-			}
-			if (iLength[2] <= _capacity && _dirnamelength) {
-				INT32 i; 
-				for (i = iLength[2] - 1; i >= 0; --i) {
-					if (_pathout[i] == '\\') {
-						*_dirnamelength = i;
-						break;
-					}
-				}
 			} 
 			iLength[0] = iLength[2]; 
 			break;
@@ -136,49 +125,6 @@ extern "C" {
 			free(wPath1);
 		return iLength[0];
 	} 
-
-
-	static INT32 Win32_GetModPath(
-		PCHAR _cPathOut,
-		INT32 _iCapacity,
-		PINT  _iDirnameLength) {
-
-		HMODULE hModule;
-		INT32   iLength;
-		DWORD   dwFlags;
-		BOOL    bResult;
-
-		bResult = FALSE;
-		iLength = -1;
-		dwFlags = 
-			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | \
-			GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT;
-
-	    #if defined(_MSC_VER)
-	    #  pragma warning(push)
-	    #  pragma warning(disable: 4054)
-	    #endif
-		bResult = GetModuleHandleEx(
-			dwFlags, 
-			(LPCTSTR)Z_ReturnAddress(),
-			&hModule);
-		#if defined(_MSC_VER)
-		#pragma warning(pop)
-		#endif
-
-		if (bResult == TRUE) {
-			iLength = _Win32BasePath(
-				hModule, 
-				_cPathOut, 
-				_iCapacity, 
-				_iDirnameLength);
-		} 
-		return iLength;
-	}
-
-
-#  define Win32_GetExePath(out, cap, len)\
-   _Win32BasePath(NULL, out, cap, len)
 
 
 #ifdef __cplusplus

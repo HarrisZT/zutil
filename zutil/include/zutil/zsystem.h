@@ -43,10 +43,10 @@ typedef struct {
 		Byte patch;    //update version 
 	} version;         //identification of library version
 
-	int    isDebug;       //binary is debug or release build? 
+	Int32  isDebug;       //binary is debug or release build? 
 	Char   exeTitle[260]; //name of the program executable 
 	Char   basepath[260]; //the base path (where exe was run from)
-	Lpcstr dirsep;        //directory seperator (platform dependent)
+	Char   dirsep;        //directory seperator (platform dependent)
 	Lpcstr platformId;    //identification of platform 
 	Lpcstr compilerId;    //identification of compiler
 	Lpcstr archId;        //identification of architecture

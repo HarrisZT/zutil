@@ -29,27 +29,25 @@ freely, subject to the following restrictions:
 #include "zbasepath_common.h"  
 
 #if defined(__QNXNTO__)  
-#  include <dlfcn.h> 
-#  define WAI_PROC_SELF_EXE "/proc/self/exefile"
+#  include <dlfcn.h>  
 #ifdef __cplusplus
 extern "C" {
-#endif
-	   
+#endif	   
 
 
-	static int Qnxnto_GetExePath(
-		char* _cPathOut,
-		int   _iCapacity,
-		int*  _iDirnameLength) {
+	static Int32
+	QnxntoGetBasePath(
+		_Inout_opt_ Char* _out,
+		_In_        Int32 _len) {
 
-		char  cBuffer1[PATH_MAX];
-		char  cBuffer2[PATH_MAX];
-		char* cResolved = NULL;
+		Char  cBuffer1[Z_MAXPATH];
+		Char  cBuffer2[Z_MAXPATH];
+		Char* cResolved = NULL;
 		FILE* fSelfExe  = NULL;
-		int   iLength   = -1;
+		Int32 iLength   = -1;
 
 		for (;;) {
-			fSelfExe = fopen(_PROC_SELF_EXE, "r");
+			fSelfExe = fopen("/proc/self/exefile", "r");
 			if (!fSelfExe) {
 				break;
 			}
@@ -60,62 +58,14 @@ extern "C" {
 			if (!cResolved) {
 				break;
 			}
-			iLength = (int)strlen(cResolved);
-			if (iLength <= _iCapacity) {
-				memcpy(_cPathOut, cResolved, iLength);
-
-				if (_iDirnameLength) {
-					int i;
-					for (i = iLength - 1; i >= 0; --i) {
-						if (_cPathOut[i] == '/') {
-							*_iDirnameLength = i;
-							break;
-						}
-					}
-				}
-			}
+			iLength = (Int32)strlen(cResolved);
+			if (iLength <= _len) 
+				memcpy(_out, cResolved, iLength); 
 			break;
 		}
 		fclose(fSelfExe);
 		return iLength;
-	}
-
- 
-	static int Qnxnto_GetModPath(
-		char* _cPathOut,
-		int   _iCapacity,
-		int*  _iDirnameLength) {
-
-		char  cBuffer[PATH_MAX];
-		char* cResolved = NULL;
-		int   iLength = -1;
-
-		for (;;) {
-			Dl_info info;
-			if (dladdr(F2D_ReturnAddress(), &info)) {
-				cResolved = realpath(info.dli_fname, cBuffer);
-				if (!cResolved) {
-					break;
-				}
-				iLength = (int)strlen(cResolved);
-				if (iLength <= _iCapacity) {
-					memcpy(_cPathOut, cResolved, iLength);
-
-					if (_iDirnameLength) {
-						int i;
-						for (i = iLength - 1; i >= 0; --i) {
-							if (_cPathOut[i] == '/') {
-								*_iDirnameLength = i;
-								break;
-							}
-						}
-					}
-				}
-			}
-			break;
-		}
-		return iLength;
-	}
+	} 
 
 #ifdef __cplusplus
 }

@@ -36,24 +36,23 @@ freely, subject to the following restrictions:
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 	
 
-	static int Apple_GetExePath(
-		char* _cPathOut, 
-		int   _iCapacity, 
-		int*  _iDirnameLength) {
+	static Int32
+	AppleGetBasePath(
+		_Inout_opt_ Char* _out,
+		_In_        Int32 _len) {
 
-		char  cBuffer1[PATH_MAX];
-		char  cBuffer2[PATH_MAX];
-		char* cPath     = cBuffer1;
-		char* cResolved = NULL;
-		int   iLength   = -1;
+		Char  cBuffer1[PATH_MAX];
+		Char  cBuffer2[PATH_MAX];
+		Char* cPath     = cBuffer1;
+		Char* cResolved = NULL;
+		Int32 iLength   = -1;
 
 		for (;;) {
-			uint32_t size = (uint32_t)sizeof(cBuffer1);
+			Uint32 size = (Uint32)sizeof(cBuffer1);
 			if (_NSGetExecutablePath(cPath, &size) == -1) {
-				cPath = (char*)malloc(size);
+				cPath = (Char*)malloc(size);
 				if (!_NSGetExecutablePath(cPath, &size))
 					break;
 			} 
@@ -61,63 +60,15 @@ extern "C" {
 			if (!resolved) {
 				break;
 			}
-			iLength = (int)strlen(resolved);
-			if (iLength <= _iCapacity) {
-				memcpy(_cPathOut, cResolved, iLength);
-
-				if (_iDirnameLength) {
-					int i; 
-					for (i = iLength - 1; i >= 0; --i) {
-						if (_cPathOut[i] == '/') {
-							*_iDirnameLength = i;
-							break;
-						}
-					}
-				}
-			}
+			iLength = (Int32)strlen(resolved);
+			if (iLength <= _len) 
+				memcpy(_out, cResolved, iLength); 
 			break;
 		}
 		if (cPath != cBuffer1)
 			free(cPath);
 		return iLength;
-	}
-
- 
-	static int Apple_GetModPath(
-		char* _cPathOut,
-		int   _iCapacity,
-		int*  _iDirnameLength) {
-
-		char  cBuffer[PATH_MAX];
-		char* cResolved = NULL;
-		int   iLength   = -1;
-
-		for (;;) {
-			Dl_info info; 
-			if (dladdr(F2D_ReturnAddress(), &info)) {
-				cResolved = realpath(info.dli_fname, cBuffer);
-				if (!cResolved) {
-					break;
-				}
-				iLength = (int)strlen(cResolved);
-				if (iLength <= _iCapacity) {
-					memcpy(_cPathOut, cResolved, iLength);
-
-					if (_iDirnameLength) {
-						int i; 
-						for (i = iLength - 1; i >= 0; --i) {
-							if (_cPathOut[i] == '/') {
-								*_iDirnameLength = i;
-								break;
-							}
-						}
-					}
-				}
-			}
-			break;
-		}
-		return iLength;
-	}
+	} 
 
 #ifdef __cplusplus
 }

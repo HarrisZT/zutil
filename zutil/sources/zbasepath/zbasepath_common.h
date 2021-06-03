@@ -27,10 +27,8 @@ freely, subject to the following restrictions:
 #ifndef __ZBASEPATH_COMMON_H__
 #define __ZBASEPATH_COMMON_H__
 
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <limits.h> 
-#include <string.h>
+#include <limits.h>  
+#include "zutil/zcore.h" 
 
 #if defined(_MSC_VER)
 #  define Z_ReturnAddress() _ReturnAddress()

@@ -32,71 +32,44 @@ extern "C" {
 
 #if (Z_PLATFORM_WINDOWS)  
 #  include "zbasepath_win32.h"
-#  define _ZExePath Win32_GetExePath
-#  define _ZModPath Win32_GetModPath
+#  define _ZBasePath Win32GetBasePath 
 
 #elif defined(__linux__) || defined(__CYGWIN__) || defined(__sun) 
 #  include "zbasepath_linux.h"
-#  define _ZExePath Linux_GetExePath
-#  define _ZModPath Linux_GetModPath
+#  define _ZBasePath LinuxGetBasePath  
 
 #elif defined(__APPLE__)
 #  include "zbasepath_apple.h"
-#  define _ZExePath Apple_GetExePath
-#  define _ZModPath Apple_GetModPath
+#  define _ZBasePath AppleGetBasePath  
 
 #elif defined(__QNXNTO__) 
 #  include "zbasepath_qnxnto.h"
-#  define _ZExePath Qnxnto_GetExePath
-#  define _ZModPath Qnxnto_GetModPath
+#  define _ZBasePath QnxntoGetBasePath  
 
 #elif defined(__DragonFly__) || defined(__FreeBSD__) || \
       defined(__FreeBSD_kernel__) || defined(__NetBSD__)
 #  include "zbasepath_bsd.h"
-#  define _ZExePath Bsd_GetExePath
-#  define _ZModPath Bsd_GetModPath
+#  define _ZBasePath BsdGetBasePath  
 #else 
 #  error unsupported platform 
 #endif
 
 
+	   	
+Char* 
+ZGetBasePath(Void) { 
+	Char* out;
+	Int32 len;
 
+	len = _ZBasePath(NULL, 0);
+	out = (Char*)malloc(len + 1);
+	if (!out)
+		return NULL; //error
 
-	static Int32 
-	_zbasepath(
-		_In_        Int32  _iExeOrModFlag,
-		_Inout_opt_ Char*  _cPathOut,
-		_In_        Int32  _iCapacity,
-		_Inout_opt_ Int32* _iDirnameLength) {
-
-		Int32 iResult = -1; //invalid
-
-		if (_iExeOrModFlag == ZBASEPATH_GETEXE) {
-			iResult = _ZExePath(_cPathOut, _iCapacity, _iDirnameLength);
-		} 
-		else if (_iExeOrModFlag == ZBASEPATH_GETMOD) {
-			iResult = _ZModPath(_cPathOut, _iCapacity, _iDirnameLength);
-		} 
-		return iResult; 
-	} 
-
-	
-	Char* 
-	ZBasePath_Get(
-		_In_        Int32  _iExeOrModFlag,
-		_Inout_opt_ Int32* _iDirnameLength) { 
-
-		Char* cPathOut;
-		Int32 iLength;
-
-		iLength  = _zbasepath(_iExeOrModFlag, NULL, 0, _iDirnameLength);
-		cPathOut = (Char*)malloc(iLength + 1);
-		if (!cPathOut)
-			return NULL; //error
-		_zbasepath(_iExeOrModFlag, cPathOut, iLength, _iDirnameLength);
-		cPathOut[iLength] = '\0';
-		return cPathOut;
-	}
+	_ZBasePath(out, len);
+	out[len] = '\0';
+	return out;
+}
 
 
 #if defined(__cplusplus)

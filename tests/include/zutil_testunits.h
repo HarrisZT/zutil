@@ -43,8 +43,9 @@ typedef struct {
 
 
 extern Void TestUnit_Module_ZBase64(int _argc, char** _argv);
-extern Void TestUnit_Module_ZThreads(int _argc, char** _argv); 
 extern Void TestUnit_Module_ZLog(int _argc, char** _argv);
+extern Void TestUnit_Module_ZSystem(int _argc, char** _argv);
+extern Void TestUnit_Module_ZThreads(int _argc, char** _argv); 
 	
 
 

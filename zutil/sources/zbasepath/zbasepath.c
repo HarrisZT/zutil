@@ -54,7 +54,6 @@ extern "C" {
 #  error unsupported platform 
 #endif
 
-
 	   	
 Char* 
 ZGetBasePath(Void) { 

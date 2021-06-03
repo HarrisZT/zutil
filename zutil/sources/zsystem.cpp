@@ -94,52 +94,48 @@ ZSystemInfo_GetArchId(Void) {
 #else
 	return "UNSUPPORTED";
 #endif
-}
-
-
-static Lpcstr
-ZSystemInfo_GetDirSeparator(Void) { 
-#if (Z_PLATFORM_WINDOWS)
-	return "\\";
-#else
-	return "/";
-#endif 
-}
-
-
-static const std::string&
-ZSystemInfo_GetExe(Void) {  
-	static std::string str; 
-	Char* path; 
-	path = ZBasePath_Get(ZBASEPATH_GETEXE, NULL); 
-	str = std::string(path);
-	free(path); 
-	return str;
-}
+} 
 
 
 static std::string
-ZSystemInfo_GetBasePath() {
-	std::string str = ZSystemInfo_GetExe();
-	const size_t last_slash_idx = str.find_last_of("\\/");
+ZSystemInfo_GetExePath() {
+	Char*       path;
+	std::string str;
+	Uint32      last_slash_idx;
+
+	path = ZGetBasePath();
+	str  = std::string(path);
+
+	last_slash_idx = str.find_last_of("\\/");
 	if (std::string::npos != last_slash_idx)
 		str.erase(last_slash_idx + 1, str.length());
+
+	free(path);
+	path = NULL;
 	return str;
 }
 
 
 static std::string
-ZSystemInfo_GetExeName(Void) {
+ZSystemInfo_GetNameOfExe(Void) {
+	Char*       path;
 	std::string str;
-	str = ZSystemInfo_GetExe();
+	Uint32      last_slash_idx;
+	Uint32      period_idx;
 
-	const size_t last_slash_idx = str.find_last_of("\\/");
+	path = ZGetBasePath();
+	str  = std::string(path);
+
+	last_slash_idx = str.find_last_of("\\/");
 	if (std::string::npos != last_slash_idx) {
 		str.erase(0, last_slash_idx + 1);
 	}
-	const size_t period_idx = str.rfind('.');
+	period_idx = str.rfind('.');
 	if (std::string::npos != period_idx)  
 		str.erase(period_idx); 
+
+	free(path);
+	path = NULL;
 	return str;
 }
 
@@ -148,18 +144,19 @@ Void
 ZSystem_GetInfo(
     _Inout_ ZSystemInfo* _lpInfo) {
 
-	if (_lpInfo) {
-		_lpInfo->platformId = ZSystemInfo_GetPlatformId(); 
-		_lpInfo->dirsep     = ZSystemInfo_GetDirSeparator();
+	if (_lpInfo) { 
+		_lpInfo->platformId = ZSystemInfo_GetPlatformId();  
 		_lpInfo->archId     = ZSystemInfo_GetArchId();
 		_lpInfo->compilerId = Z_COMPILER_NAME;   
 
-		strcpy(_lpInfo->basepath, ZSystemInfo_GetBasePath().c_str());
-		strcpy(_lpInfo->exeTitle, ZSystemInfo_GetExeName().c_str());
+		strcpy(_lpInfo->basepath, ZSystemInfo_GetExePath().c_str());
+		strcpy(_lpInfo->exeTitle, ZSystemInfo_GetNameOfExe().c_str());
 
 	#if (Z_PLATFORM_WINDOWS)
+		_lpInfo->dirsep  = '\\'; 
 		_lpInfo->isDebug = IsDebuggerPresent();
 	#else 
+	    _lpInfo->dirsep  = '/';
 		_lpInfo->isDebug = Z_FALSE;
 		if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0)
 			_lpInfo->isDebug = Z_TRUE;

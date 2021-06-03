@@ -37,28 +37,31 @@ freely, subject to the following restrictions:
 
 #ifdef __cplusplus
 extern "C" {
-#endif
- 
+#endif 
 
 
-	static int Bsd_GetExePath(
-		char* _cPathOut,
-		int   _iCapacity,
-		int*  _iDirnameLength) {
+	static Int32
+	BsdGetBasePath(
+		_Inout_opt_ Char* _out,
+		_In_        Int32 _len) {
 
-		char  cBuffer1[PATH_MAX];
-		char  cBuffer2[PATH_MAX];
-		char* cPath     = cBuffer1;
-		char* cResolved = NULL;
-		int   iLength   = -1;
+		Char  cBuffer1[PATH_MAX];
+		Char  cBuffer2[PATH_MAX];
+		Char* cPath     = cBuffer1;
+		Char* cResolved = NULL;
+		Int32 iLength   = -1;
 
 		for (;;) {
 		#if defined(__NetBSD__)
-			int mib[4] = { CTL_KERN, KERN_PROC_ARGS, -1, KERN_PROC_PATHNAME };
+			Int32 mib[4] = { 
+				CTL_KERN, KERN_PROC_ARGS, -1, KERN_PROC_PATHNAME
+			};
 		#else
-			int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, -1 };
+			Int32 mib[4] = {
+				CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, -1 
+			};
 		#endif
-			size_t size = sizeof(cBuffer1);
+			SizeT size = sizeof(cBuffer1);
 
 			if (sysctl(
 				mib,
@@ -72,63 +75,17 @@ extern "C" {
 			if (!cResolved) {
 				break;
 			}
-			iLength = (int)strlen(cResolved);
-			if (iLength <= iCapacity) {
-				memcpy(_cPathOut, cResolved, iLength);
-
-				if (_iDirnameLength) {
-					int i;
-					for (i = iLength - 1; i >= 0; --i) {
-						if (_cPathOut[i] == '/') {
-							*_iDirnameLength = i;
-							break;
-						}
-					}
-				}
-			}
+			iLength = (Int32)strlen(cResolved);
+			if (iLength <= _len) 
+				memcpy(_out, cResolved, iLength); 
 			break;
 		}
 		if (cPath != cBuffer1)
 			free(cPath);
 		return iLength;
-	}
+	} 
 
- 
-	static int Bsd_GetModulePath(
-		char* _cPathOut,
-		int   _iCapacity,
-		int*  _iDirnameLength) {
 
-		char  cBuffer[PATH_MAX];
-		char* cResolved = NULL;
-		int   iLength   = -1;
-
-		for (;;) {
-			Dl_info info;
-			if (dladdr(F2D_ReturnAddress(), &info)) {
-				cResolved = realpath(info.dli_fname, cBuffer);
-				if (!cResolved) {
-					break;
-				}
-				iLength = (int)strlen(cResolved);
-				if (iLength <= iCapacity) {
-					memcpy(_cPathOut, cResolved, iLength);
-
-					if (_iDirnameLength) {
-						int i;
-						for (i = iLength - 1; i >= 0; --i) {
-							if (_cPathOut[i] == '/') {
-								*_iDirnameLength = i;
-								break;
-							}
-						}
-					}
-				}
-			}
-			break;
-		}
-		return iLength;
-	}
 #ifdef __cplusplus
 }
 #endif 
